@@ -39,8 +39,8 @@ function generatePassword(length, useLowercase, useUppercase, useNumbers) {
     return password;
 }
 
-if (require.main === module) {
-    if (userArguments.includes('--help')) {
+function parseArguments(args) {
+    if (args.includes('--help')) {
         console.log(`
 Password Generator CLI Tool
 Usage: node passwordGenerator.js [flags]
@@ -52,28 +52,41 @@ Flags:
   --uppercase         Include uppercase characters in the password.
   --numbers           Include numbers in the password.
         `);
-    } else {
-        // Read the --length option, defaulting to 8 if not found
+            return null;
+    }
+
         let length = 8;
-        const lengthIndex = userArguments.indexOf('--length');
-        if (lengthIndex !== -1 && userArguments[lengthIndex + 1]) {
-            length = parseInt(userArguments[lengthIndex + 1], 10);
+        const lengthIndex = args.indexOf('--length');
+        if (lengthIndex !== -1 && args[lengthIndex + 1]) {
+            length = parseInt(args[lengthIndex + 1], 10);
         }
+    return { 
+        length, 
+        useLowercase: args.includes('--lowercase'), 
+        useUppercase: args.includes('--uppercase'), 
+        useNumbers: args.includes('--numbers') 
+    };
+}
 
-        const useLowercase = userArguments.includes('--lowercase');
-        const useUppercase = userArguments.includes('--uppercase');
-        const useNumbers = userArguments.includes('--numbers');
-
+if (require.main === module) {
+    const options = parseArguments(userArguments);
+    
+    if (options) {
         try {
-            const result = generatePassword(length, useLowercase, useUppercase, useNumbers);
+            const result = generatePassword(
+                options.length, 
+                options.useLowercase, 
+                options.useUppercase, 
+                options.useNumbers
+            );
             console.log(`Generated Password: ${result}`);
         } catch (error) {
-            console.error(error.message);
+            console.error(`❌ Error: ${error.message}`);
         }
     }
 }
 
 module.exports = {
-    generatePassword
-}
-
+    generatePassword,
+    parseArguments
+};
