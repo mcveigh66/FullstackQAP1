@@ -1,0 +1,14 @@
+{
+  "name": "keyin-password-generator",
+  "version": "1.0.0",
+  "description": "A basic CLI application to generate passwords",
+  "main": "passwordGenerator.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Matthew English",
+  "license": "MIT",
+  "dependencies": {
+    "jest": "^29.7.0"
+  }
+}
