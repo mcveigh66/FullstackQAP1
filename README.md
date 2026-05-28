@@ -16,4 +16,4 @@ Clone this repository to your local machine:
 
 bash
 
-git clone <Repository goes here> 
+git clone RepositoryGoesHere
