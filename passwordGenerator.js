@@ -64,8 +64,16 @@ Flags:
         const useUppercase = userArguments.includes('--uppercase');
         const useNumbers = userArguments.includes('--numbers');
 
-
+        try {
+            const result = generatePassword(length, useLowercase, useUppercase, useNumbers);
+            console.log(`Generated Password: ${result}`);
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
+}
 
 module.exports = {
     generatePassword
 }
+
